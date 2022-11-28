@@ -27,6 +27,16 @@ Moved /User/Makiyu/.gitconfig to /User/Makiyu/dotfiles/.gitconfig
 Added a symlink to /User/Makiyu/.gitconfig from /User/Makiyu/dotfiles/.gitconfig
 ```
 
+### `./mpdfm link <file_or_dir_in_repo> [target_to_link]`
+
+Makes a symlink of a file or directory in this repository to the current machine.
+
+__Example:__
+```
+$ ./mpdfm link .vimrc
+Added a symlink to /Users/Makiyu/.vimrc from /Users/Makiyu/dotfiles/.vimrc
+```
+
 ## License
 
 give me a few days to think about it
