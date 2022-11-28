@@ -1,0 +1,9 @@
+[user]
+	name = Makiyu-py
+	email = 73825066+Makiyu-py@users.noreply.github.com
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+[color]
+	ui = true
