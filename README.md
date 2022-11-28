@@ -4,7 +4,7 @@ wip... buuttt I'll give you a short tour
 
 ## Makiyu's Personal Dotfile Manager
 
-I got frustrated on which dotfile manager I should use so I made my own with my non-existed C++ skills (would not recommend to use since... this is my first C++ program)
+I got frustrated on which dotfile manager I should use so I made my own with my non-existant C++ skills (would not recommend to use since... this is my first C++ program)
 
 ### Installation
 
