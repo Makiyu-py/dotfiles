@@ -8,7 +8,6 @@ I got frustrated on which dotfile manager I should use so I made my own with my 
 
 ### Installation
 
-
 ```
 $ g++ -std=c++11 mpdfm.cpp -o mpdfm
 ```
@@ -29,7 +28,7 @@ Added a symlink to /User/Makiyu/.gitconfig from /User/Makiyu/dotfiles/.gitconfig
 
 #### `./mpdfm link <file_or_dir_in_repo> [target_to_link]`
 
-Makes a symlink of a file or directory in this repository to the current machine.
+Makes a symlink of an existing file or directory in this repository to the current machine.
 
 __Example:__
 ```
