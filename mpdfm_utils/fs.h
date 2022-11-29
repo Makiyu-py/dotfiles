@@ -27,7 +27,7 @@ namespace fs_util
 
             return homedir;
         }
-        static int move(std::string target, std::string new_dir)
+	static int move(std::string target, std::string new_dir)
         {
             return rename(target.data(), new_dir.data());
         }
@@ -44,7 +44,14 @@ namespace fs_util
         {
             return unlink(path.data());
         }
-    };
-    
+	static char* get_origin(std::string link_path)
+	{
+	    static char buf[1024];
+	    ssize_t len;
+	    if ((len = readlink(link_path.data(), buf, sizeof(buf)-1)) != -1)
+    	        buf[len] = '\0';
 
+	    return buf;
+	}
+    };
 }
