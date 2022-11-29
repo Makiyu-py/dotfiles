@@ -35,6 +35,18 @@ __Example:__
 $ ./mpdfm link .vimrc
 Added a symlink to /Users/Makiyu/.vimrc from /Users/Makiyu/dotfiles/.vimrc
 ```
+#### `./mpdfm undot <symlink_path>`
+
+Essentially the reverse of the `dot` command.
+
+Deletes a symlink and moves the original file pointed by the symlink to the symlink path.
+
+__Example:__
+```
+$ ./mpdfm undot ~/test_file.txt
+Removed symlink on /Users/Makiyu/test_file.txt that was pointed at /Users/Makiyu/dotfiles/test_file.txt
+Moved /Users/Makiyu/dotfiles/test_file.txt to /Users/Makiyu/test_file.txt
+```
 
 ## License
 

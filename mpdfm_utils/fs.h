@@ -26,21 +26,23 @@ namespace fs_util
 
             return std::string(homedir);
         }
-	static std::string expand_path(std::string rel_path)
-	{
-	    fs::path path;
-	
-            if (rel_path.rfind("~/", 0) == 0)  // searched everywhere for an in-built solution... NONE!
-                path = fs::absolute(std::string(path::get_home()) + rel_path.substr(1));
-            else
-                path = fs::canonical(rel_path.c_str());
-
-	    return path.string();
-	}
-	static void move(std::string target, std::string new_dir)
+        static std::string expand_path(std::string rel_path)
+        {
+            // note to self: apparently "~/" expands by itself
+            // when it's in the terminal, so like when i do
+            //   $ ./mpdfm undot ~/test_file.txt
+            // `cmdl[2]` (on mpdfm.cpp ofc) would already
+            // spit out `/Users/Makiyu/test_file.txt` ???
+            return fs::canonical(rel_path.c_str()).string();
+        }
+        static void move(std::string target, std::string new_dir)
         {
             fs::rename(target, new_dir);
             std::cout << "Moved " << target << " to " << new_dir << std::endl;
+        }
+        static bool exists(std::string path)
+        {
+            return fs::exists(path) && !fs::is_empty(path);
         }
     };
 
@@ -52,14 +54,19 @@ namespace fs_util
             fs::create_symlink(dir_path, link_path);
     	    std::cout << "Added a symlink to " << link_path << " from " << dir_path << std::endl;
         }
-        static int remove(std::string path)
+        static void remove(std::string path)
         {
+            if (!fs::is_symlink(path)) {
+                std::cerr << "Path '" << path << "' is not a symlink.";
+                return;
+            }
+
             std::string pointed = soft_link::get_origin(path);
 
             if (fs::remove(path))
-		std::cout << "Removed symlink on " << path << " that was pointed at " << pointed << std::endl;
-	    else
-		std::cerr << "Path '" << path << "' does not exist." << std::endl;
+                std::cout << "Removed symlink on " << path << " that was pointed at " << pointed << std::endl;
+            else
+                std::cerr << "Path '" << path << "' does not exist." << std::endl;
         }
 	static std::string get_origin(std::string link_path)
 	{

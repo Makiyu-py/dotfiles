@@ -31,6 +31,14 @@ int main(int, char* argv[])
 
     fs_util::soft_link::create(fn, to_symlink);
   }
+  else if (command == "undot")
+  {
+    string sym = cmdl[2];
+    string to_move = fs_util::soft_link::get_origin(sym);
+    
+    fs_util::soft_link::remove(sym);
+    fs_util::path::move(to_move, sym);
+  }
   else
   {
     cout << command << endl;
