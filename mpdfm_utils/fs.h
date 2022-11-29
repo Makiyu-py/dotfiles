@@ -57,16 +57,13 @@ namespace fs_util
         static void remove(std::string path)
         {
             if (!fs::is_symlink(path)) {
-                std::cerr << "Path '" << path << "' is not a symlink.";
-                return;
+                throw std::invalid_argument("Path '" + path + "' is not a symlink.");
             }
 
-            std::string pointed = soft_link::get_origin(path);
-
             if (fs::remove(path))
-                std::cout << "Removed symlink on " << path << " that was pointed at " << pointed << std::endl;
+                std::cout << "Removed symlink on " << path << " that was pointed at " << soft_link::get_origin(path) << std::endl;
             else
-                std::cerr << "Path '" << path << "' does not exist." << std::endl;
+                throw std::invalid_argument("Path '" + path + "' does not exist.");
         }
 	static std::string get_origin(std::string link_path)
 	{
