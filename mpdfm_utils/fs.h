@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <unistd.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <experimental/filesystem>  // we're compiling on C++11 if you've forgotten
@@ -14,21 +13,18 @@ namespace fs_util
     {
     public:
         path();
-        static char* get_cwd()
-        {
-            static char cwd_buffer[256];
-            getcwd(cwd_buffer, sizeof(cwd_buffer));
-            
-            return cwd_buffer;
+        static std::string get_cwd()
+        {           
+            return fs::current_path().string();
         }
-        static char* get_home()
+        static std::string get_home()
         {
             char *homedir;
 
             if ((homedir = getenv("HOME")) == NULL)
                 homedir = getpwuid(getuid())->pw_dir;
 
-            return homedir;
+            return std::string(homedir);
         }
 	static std::string expand_path(std::string rel_path)
 	{
@@ -41,31 +37,38 @@ namespace fs_util
 
 	    return path.string();
 	}
-	static int move(std::string target, std::string new_dir)
+	static void move(std::string target, std::string new_dir)
         {
-            return rename(target.data(), new_dir.data());
+            fs::rename(target, new_dir);
+            std::cout << "Moved " << target << " to " << new_dir << std::endl;
         }
     };
 
     class soft_link
     {
     public:
-        static int create(std::string dir_path, std::string link_path)
+        static void create(std::string dir_path, std::string link_path)
         {
-            return symlink(dir_path.data(), link_path.data());
+            fs::create_symlink(dir_path, link_path);
+    	    std::cout << "Added a symlink to " << link_path << " from " << dir_path << std::endl;
         }
         static int remove(std::string path)
         {
-            return unlink(path.data());
+            std::string pointed = soft_link::get_origin(path);
+
+            if (fs::remove(path))
+		std::cout << "Removed symlink on " << path << " that was pointed at " << pointed << std::endl;
+	    else
+		std::cerr << "Path '" << path << "' does not exist." << std::endl;
         }
-	static char* get_origin(std::string link_path)
+	static std::string get_origin(std::string link_path)
 	{
 	    static char buf[1024];
 	    ssize_t len;
 	    if ((len = readlink(link_path.data(), buf, sizeof(buf)-1)) != -1)
     	        buf[len] = '\0';
 
-	    return buf;
+	    return std::string(buf);
 	}
     };
 }
