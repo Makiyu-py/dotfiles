@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <experimental/filesystem>  // we're compiling on C++11 if you've forgotten
+
+namespace fs = std::experimental::filesystem;
 
 namespace fs_util
 {
@@ -27,6 +30,17 @@ namespace fs_util
 
             return homedir;
         }
+	static std::string expand_path(std::string rel_path)
+	{
+	    fs::path path;
+	
+            if (rel_path.rfind("~/", 0) == 0)  // searched everywhere for an in-built solution... NONE!
+                path = fs::absolute(std::string(path::get_home()) + rel_path.substr(1));
+            else
+                path = fs::canonical(rel_path.c_str());
+
+	    return path.string();
+	}
 	static int move(std::string target, std::string new_dir)
         {
             return rename(target.data(), new_dir.data());
