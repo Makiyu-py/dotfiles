@@ -40,6 +40,10 @@ namespace fs_util
             fs::rename(target, new_dir);
             std::cout << "Moved " << target << " to " << new_dir << std::endl;
         }
+        static bool delete_path(std::string target)
+        {
+            return fs::remove(target);
+        }
         static bool exists(std::string path)
         {
             return fs::exists(path) && !fs::is_empty(path);
