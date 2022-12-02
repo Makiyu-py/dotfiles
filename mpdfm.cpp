@@ -60,7 +60,7 @@ int main(int, char* argv[])
         !cli_util::get_input_by_bool(
           "It looks like the path '" + 
           to_symlink + 
-          "' already exists!\nIf we proceed, we'll delete that path in favor of the symlink. Would you still like to proceed?"
+          "' already exists! If we proceed, we'll delete that path in favor of the symlink.\nWould you still like to proceed?"
         )
       )
       {
