@@ -1,7 +1,7 @@
 #include <iostream>
 #include "mpdfm_utils/fs.h"
 #include "mpdfm_utils/cli.h"
-#include "./include/argh/argh.h"
+#include <argh/argh.h>
 
 using namespace std;
 

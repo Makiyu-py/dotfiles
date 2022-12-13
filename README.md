@@ -9,7 +9,7 @@ I got frustrated on which dotfile manager I should use so I made my own with my 
 ### Installation
 
 ```
-$ g++ -std=c++11 mpdfm.cpp -o mpdfm
+$ g++ -std=c++11 -Iinclude mpdfm.cpp -o mpdfm
 ```
 
 ### Commands
